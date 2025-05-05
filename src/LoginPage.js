@@ -1,45 +1,43 @@
 // src/LoginPage.js
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from './AuthContext';
 
 function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
-
-  const [loginId, setLoginId] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const handleLogin = () => {
-    if (loginId === 'admin' && password === '1234') {
-      login();
+    if (login(email, password)) {
       navigate('/');
     } else {
-      setError('Invalid login ID or password');
+      setError('Invalid email or password');
     }
   };
-  
 
   return (
     <div style={{ padding: '20px' }}>
       <h2>Login</h2>
       <input
-        type="text"
-        placeholder="Login ID"
-        value={loginId}
-        onChange={(e) => setLoginId(e.target.value)}
-        style={{ marginBottom: '10px', display: 'block' }}
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        autoComplete="off"
       />
       <input
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        style={{ marginBottom: '10px', display: 'block' }}
+        autoComplete="off"
       />
       <button onClick={handleLogin}>Login</button>
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
     </div>
   );
 }
