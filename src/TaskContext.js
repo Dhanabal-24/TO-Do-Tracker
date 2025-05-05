@@ -1,14 +1,16 @@
-// src/TaskContext.js
 import { createContext, useContext, useState } from 'react';
 
 export const TaskContext = createContext();
 
 export const TaskProvider = ({ children }) => {
-  const [tasks, setTasks] = useState([]); // All tasks (both completed and not completed)
+  const [tasks, setTasks] = useState([]);  // All tasks
   const [archivedTasks, setArchivedTasks] = useState([]);
 
-  const addTask = (task) => {
-    setTasks((prev) => [...prev, { text: task, completed: false }]);
+  const addTask = (taskText, category) => {
+    setTasks((prev) => [
+      ...prev,
+      { text: taskText, completed: false, category: category }
+    ]);
   };
 
   const deleteTask = (index) => {
@@ -30,7 +32,6 @@ export const TaskProvider = ({ children }) => {
   const deleteArchivedTask = (index) => {
     setArchivedTasks((prev) => prev.filter((_, i) => i !== index));
   };
-  
 
   const toggleCompletion = (index) => {
     setTasks((prev) => {
@@ -49,7 +50,7 @@ export const TaskProvider = ({ children }) => {
         deleteTask,
         archiveTask,
         unarchiveTask,
-        deleteArchivedTask, 
+        deleteArchivedTask,
         toggleCompletion,
       }}
     >

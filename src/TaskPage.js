@@ -1,15 +1,18 @@
-// src/TaskPage.js
 import React, { useState, useContext } from 'react';
 import { TaskContext } from './TaskContext';
 
 function TaskPage() {
   const [newTask, setNewTask] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');  // New state for category
   const { tasks, addTask, deleteTask, archiveTask, toggleCompletion } = useContext(TaskContext);
 
+  const categories = ['Work', 'Personal', 'Shopping', 'Health']; // Define your categories here
+
   const handleAdd = () => {
-    if (newTask.trim() !== '') {
-      addTask(newTask.trim());
+    if (newTask.trim() !== '' && selectedCategory) {
+      addTask(newTask.trim(), selectedCategory);  // Pass category when adding task
       setNewTask('');
+      setSelectedCategory('');  // Reset category selection after adding
     }
   };
 
@@ -22,6 +25,18 @@ function TaskPage() {
         onChange={(e) => setNewTask(e.target.value)}
         placeholder="Enter task"
       />
+      
+      {/* Dropdown for category selection */}
+      <select
+        value={selectedCategory}
+        onChange={(e) => setSelectedCategory(e.target.value)}
+      >
+        <option value="">Select Category</option>
+        {categories.map((category, index) => (
+          <option key={index} value={category}>{category}</option>
+        ))}
+      </select>
+
       <button onClick={handleAdd}>Add</button>
 
       <ul>
@@ -32,7 +47,7 @@ function TaskPage() {
               checked={task.completed}
               onChange={() => toggleCompletion(i)}
             />
-            {task.text}
+            {task.text} - <strong>{task.category}</strong> {/* Display task category */}
             <button onClick={() => deleteTask(i)}>Delete</button>
             <button onClick={() => archiveTask(i)}>Archive</button>
           </li>
