@@ -1,0 +1,21 @@
+/* HomePage.css */
+.home-container {
+  max-width: 800px;
+  margin: 100px auto;
+  padding: 40px;
+  text-align: center;
+  background-color: #f0f8ff;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.home-container h2 {
+  font-size: 32px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.home-container p {
+  font-size: 18px;
+  color: #555;
+}

@@ -1,0 +1,70 @@
+.archive-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #fefefe;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.archive-title {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.no-archives {
+  text-align: center;
+  color: #999;
+}
+
+.archive-list {
+  list-style: none;
+  padding: 0;
+}
+
+.archive-item {
+  background: #f9f9f9;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.task-text {
+  font-weight: 500;
+}
+
+.task-category {
+  font-size: 0.9em;
+  color: #555;
+  margin-left: 10px;
+}
+
+.archive-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.unarchive-btn,
+.delete-btn {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.unarchive-btn {
+  background-color: #3498db;
+  color: white;
+}
+
+.delete-btn {
+  background-color: #e74c3c;
+  color: white;
+}

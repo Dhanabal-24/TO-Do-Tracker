@@ -1,0 +1,22 @@
+/* Dashboard.css */
+.dashboard-container {
+  max-width: 800px;
+  margin: 100px auto;
+  padding: 40px;
+  background-color: #eaf4fc;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.dashboard-container h2 {
+  font-size: 32px;
+  color: #2a2a2a;
+  margin-bottom: 20px;
+}
+
+.dashboard-container p {
+  font-size: 20px;
+  margin: 10px 0;
+  color: #444;
+}

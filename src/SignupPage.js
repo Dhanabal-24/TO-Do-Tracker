@@ -1,37 +1,76 @@
 // src/SignupPage.js
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from './AuthContext';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./SignupPage.css";
 
 function SignupPage() {
-  const { signUp } = useAuth();
   const navigate = useNavigate();
-  const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' });
-  const [error, setError] = useState('');
-
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [error, setError] = useState("");
 
   const handleSignup = () => {
-    if (!form.name || !form.email || !form.password || !form.confirm) {
-      setError('All fields are required.');
-    } else if (form.password !== form.confirm) {
-      setError('Passwords do not match.');
-    } else {
-      signUp({ name: form.name, email: form.email, password: form.password });
-      navigate('/login');
+    if (!name || !email || !password || !confirm) {
+      setError("Please fill in all fields");
+      return;
     }
+    if (password !== confirm) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    const existingUsers = JSON.parse(localStorage.getItem("users") || "[]");
+    const alreadyExists = existingUsers.some((user) => user.email === email);
+
+    if (alreadyExists) {
+      setError("Email already registered");
+      return;
+    }
+
+    const newUser = { name, email, password };
+    localStorage.setItem("users", JSON.stringify([...existingUsers, newUser]));
+    setError("");
+    navigate("/login");
   };
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div className="signup-container">
       <h2>Sign Up</h2>
-      <input name="name" placeholder="Name" value={form.name} onChange={handleChange} />
-      <input name="email" placeholder="Email" value={form.email} onChange={handleChange} />
-      <input type="password" name="password" placeholder="Password" value={form.password} onChange={handleChange} />
-      <input type="password" name="confirm" placeholder="Confirm Password" value={form.confirm} onChange={handleChange} />
+      <input
+        type="text"
+        placeholder="Name"
+        value={name}
+        autoComplete="off"
+        onChange={(e) => setName(e.target.value)}
+      />
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        autoComplete="off"
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        autoComplete="off"
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Confirm Password"
+        value={confirm}
+        autoComplete="off"
+        onChange={(e) => setConfirm(e.target.value)}
+      />
       <button onClick={handleSignup}>Sign Up</button>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <p>Already have an account? <Link to="/login">Login</Link></p>
+      {error && <p className="error">{error}</p>}
+      <p>
+        Already have an account? <a href="/login">Login</a>
+      </p>
     </div>
   );
 }

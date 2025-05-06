@@ -1,11 +1,12 @@
-// src/Home.js
-import React from 'react';
+// src/HomePage.js
+import React from "react";
+import "./Home.css";
 
 function Home() {
   return (
-    <div>
+    <div className="home-container">
       <h2>Welcome to the To-Do Tracker</h2>
-      <p>This is the home page. To manage tasks, visit the Task Page.</p>
+      <p>Manage your tasks efficiently and stay organized!</p>
     </div>
   );
 }
