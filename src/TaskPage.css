@@ -1,48 +1,43 @@
-/* TaskPage.css */
-.task-container {
-  max-width: 800px;
-  margin: 80px auto;
-  padding: 30px;
-  background-color: #f7f9fc;
+.task-page-container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
 }
 
-.task-container h2 {
+.task-page-title {
   text-align: center;
+  font-size: 28px;
   margin-bottom: 20px;
   color: #333;
 }
 
-.task-form {
+.task-input-group {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 20px;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 25px;
 }
 
-.task-form input,
-.task-form select,
-.task-form button {
+.task-input-group input,
+.task-input-group select,
+.task-input-group button {
   padding: 10px;
+  border: 1px solid #bbb;
+  border-radius: 5px;
   font-size: 16px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
 }
 
-.task-form input,
-.task-form select {
-  flex: 1;
-}
-
-.task-form button {
+.task-input-group button {
   background-color: #007bff;
   color: white;
-  border: none;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.task-form button:hover {
+.task-input-group button:hover {
   background-color: #0056b3;
 }
 
@@ -51,45 +46,38 @@
   padding: 0;
 }
 
-.task-list li {
-  background-color: #ffffff;
-  padding: 15px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
+.task-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
-.task-info {
+.task-item span {
   flex-grow: 1;
   margin-left: 10px;
-  display: flex;
-  justify-content: space-between;
+  font-size: 16px;
 }
 
-.task-category {
-  font-style: italic;
-  color: #777;
-  margin-left: 15px;
+.task-item .completed {
+  text-decoration: line-through;
+  color: gray;
 }
 
-.task-actions button {
+.task-item button {
   margin-left: 10px;
-  padding: 6px 10px;
-  font-size: 14px;
+  padding: 5px 8px;
   border: none;
   border-radius: 4px;
+  background-color: #dc3545;
+  color: white;
   cursor: pointer;
 }
 
-.task-actions button.delete {
-  background-color: #dc3545;
-  color: white;
-}
-
-.task-actions button.archive {
-  background-color: #17a2b8;
-  color: white;
+.task-item button:hover {
+  background-color: #a71d2a;
 }

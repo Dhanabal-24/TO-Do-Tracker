@@ -1,79 +1,82 @@
-// src/TaskPage.js
 import React, { useState, useContext } from "react";
 import { TaskContext } from "./TaskContext";
 import "./TaskPage.css";
 
 function TaskPage() {
-  const [newTask, setNewTask] = useState("");
-  const [category, setCategory] = useState("");
-  const [categories, setCategories] = useState(["Work", "Personal", "Urgent"]);
   const { tasks, addTask, deleteTask, archiveTask, toggleCompletion } =
     useContext(TaskContext);
+  const [newTask, setNewTask] = useState("");
+  const [newCategory, setNewCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [categories, setCategories] = useState(["Work", "Personal", "Others"]);
 
-  const handleAdd = () => {
-    if (newTask.trim() && category.trim()) {
-      if (!categories.includes(category)) {
-        setCategories((prev) => [...prev, category]);
-      }
-      addTask({ text: newTask.trim(), category, completed: false });
+  const handleAddCategory = () => {
+    const trimmed = newCategory.trim();
+    if (trimmed && !categories.includes(trimmed)) {
+      setCategories((prev) => [...prev, trimmed]);
+      setSelectedCategory(trimmed);
+    }
+    setNewCategory("");
+  };
+
+  const handleAddTask = () => {
+    if (newTask.trim() !== "" && selectedCategory !== "") {
+      addTask({
+        text: newTask.trim(),
+        category: selectedCategory,
+        completed: false,
+      });
       setNewTask("");
-      setCategory("");
     }
   };
 
   return (
-    <div className="task-container">
-      <h2>Task Page</h2>
+    <div className="task-page-container">
+      <h2 className="task-page-title">Task Page</h2>
 
-      <div className="task-form">
+      <div className="task-input-group">
         <input
           type="text"
           value={newTask}
           onChange={(e) => setNewTask(e.target.value)}
           placeholder="Enter task"
         />
-        <select value={category} onChange={(e) => setCategory(e.target.value)}>
+
+        <select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+        >
           <option value="">Select Category</option>
-          {categories.map((cat, i) => (
-            <option key={i} value={cat}>
+          {categories.map((cat, idx) => (
+            <option key={idx} value={cat}>
               {cat}
             </option>
           ))}
         </select>
+
         <input
           type="text"
+          value={newCategory}
+          onChange={(e) => setNewCategory(e.target.value)}
           placeholder="Or add new category"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
         />
-        <button onClick={handleAdd}>Add</button>
+        <button onClick={handleAddCategory}>Add Category</button>
+        <button onClick={handleAddTask}>Add Task</button>
       </div>
 
       <ul className="task-list">
         {tasks.map((task, i) => (
-          <li key={i}>
+          <li key={i} className="task-item">
             <input
               type="checkbox"
               checked={task.completed}
               onChange={() => toggleCompletion(i)}
             />
-            <div
-              className="task-info"
-              style={{
-                textDecoration: task.completed ? "line-through" : "none",
-              }}
-            >
-              <span>{task.text}</span>
-              <span className="task-category">[{task.category}]</span>
-            </div>
-            <div className="task-actions">
-              <button className="delete" onClick={() => deleteTask(i)}>
-                Delete
-              </button>
-              <button className="archive" onClick={() => archiveTask(i)}>
-                Archive
-              </button>
-            </div>
+            <span className={task.completed ? "completed" : ""}>
+              {task.text} — <strong>{task.category}</strong>
+            </span>
+            <button onClick={() => deleteTask(i)}>Delete</button>
+            <button onClick={() => archiveTask(i)}>Archive</button>
           </li>
         ))}
       </ul>
